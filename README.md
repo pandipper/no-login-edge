@@ -1,8 +1,20 @@
 # No Login Edge 版
 
+🟦 Microsoft Edge　Chromium 内核 / Manifest V3
+
 把 [MartinBraquet/no-login](https://github.com/MartinBraquet/no-login) 的 Firefox 扩展改成能在 Microsoft Edge 上加载的版本。基线是上游 1.21，版本号改为 1.21.1。业务逻辑没有改动，改的是 manifest 和编译产物。
 
 上游原项目只支持 Firefox。它的 README 把「兼容其他浏览器」列在贡献建议里，并注明没有在其他浏览器上测试过。
+
+## 站点支持
+
+  - LinkedIn　可用。移除登录横幅和弹窗；带 `sessionRedirect` 参数的链接转成 Google 搜索。
+  - Facebook　可用。移除底部登录横幅和居中登录弹窗。
+  - Instagram　可用。移除登录横幅和弹窗；把登录页的 `next` 参数转回目标页，点帖子走普通导航而不是登录弹窗。
+  - X / Twitter　可用。移除登录卡片和底部注册横幅；点图片改用扩展自己的 lightbox 显示原图。
+  - Tumblr　不可用。`src/core.js` 里的 `removeTumblrLogin` 是空占位，只写日志和计数，不动页面；manifest 的 `host_permissions` 也没有 tumblr.com，内容脚本不会注入。上游是这个状态，本仓库没有为它扩大权限。
+
+这里的「可用」指代码有对应处理、域名已在 manifest 授权，不等于逐站点实测。Edge 下的实测范围见下面的「验证范围」。
 
 ## 安装
 
@@ -39,7 +51,6 @@
 
 ## 已知限制
 
-  - tumblr 不工作。代码里匹配了 tumblr.com，但 manifest 的 `host_permissions` 没有这个域名，拿不到 `tab.url`。上游也是这个状态，没有为了它扩大权限。
   - 内容脚本每 200ms 轮询一次 `checkForLogins`，会反复唤醒 Chromium 的 MV3 服务 worker。Firefox 使用常驻事件页，没有这部分开销。长时间挂着时，Edge 版的 CPU 占用会比 Firefox 版高一些。这是上游的轮询设计，本仓库未改。
   - 本仓库没有上架 Edge 加载项商店。要上架需要单独的开发者账号、审核和扩展 ID。
 
