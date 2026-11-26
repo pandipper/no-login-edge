@@ -1,6 +1,6 @@
 # No Login Edge 版
 
-🟦 Microsoft Edge　Chromium 内核 / Manifest V3
+<img src="images/microsoftedge.svg" width="16" alt=""> Microsoft Edge　Chromium 内核 / Manifest V3
 
 把 [MartinBraquet/no-login](https://github.com/MartinBraquet/no-login) 的 Firefox 扩展改成能在 Microsoft Edge 上加载的版本。基线是上游 1.21，版本号改为 1.21.1。业务逻辑没有改动，改的是 manifest 和编译产物。
 
@@ -8,11 +8,11 @@
 
 ## 站点支持
 
-  - LinkedIn　可用。移除登录横幅和弹窗；带 `sessionRedirect` 参数的链接转成 Google 搜索。
-  - Facebook　可用。移除底部登录横幅和居中登录弹窗。
-  - Instagram　可用。移除登录横幅和弹窗；把登录页的 `next` 参数转回目标页，点帖子走普通导航而不是登录弹窗。
-  - X / Twitter　可用。移除登录卡片和底部注册横幅；点图片改用扩展自己的 lightbox 显示原图。
-  - Tumblr　不可用。`src/core.js` 里的 `removeTumblrLogin` 是空占位，只写日志和计数，不动页面；manifest 的 `host_permissions` 也没有 tumblr.com，内容脚本不会注入。上游是这个状态，本仓库没有为它扩大权限。
+  - <img src="images/linkedin.svg" width="16" alt=""> LinkedIn　可用。移除登录横幅和弹窗；带 `sessionRedirect` 参数的链接转成 Google 搜索。
+  - <img src="images/facebook.svg" width="16" alt=""> Facebook　可用。移除底部登录横幅和居中登录弹窗。
+  - <img src="images/instagram.svg" width="16" alt=""> Instagram　可用。移除登录横幅和弹窗；把登录页的 `next` 参数转回目标页，点帖子走普通导航而不是登录弹窗。
+  - <picture><source media="(prefers-color-scheme: dark)" srcset="images/x-dark.svg"><img src="images/x.svg" width="16" alt=""></picture> X / Twitter　可用。移除登录卡片和底部注册横幅；点图片改用扩展自己的 lightbox 显示原图。
+  - <picture><source media="(prefers-color-scheme: dark)" srcset="images/tumblr-dark.svg"><img src="images/tumblr.svg" width="16" alt=""></picture> Tumblr　不可用。`src/core.js` 里的 `removeTumblrLogin` 是空占位，只写日志和计数，不动页面；manifest 的 `host_permissions` 也没有 tumblr.com，内容脚本不会注入。上游是这个状态，本仓库没有为它扩大权限。
 
 这里的「可用」指代码有对应处理、域名已在 manifest 授权，不等于逐站点实测。Edge 下的实测范围见下面的「验证范围」。
 
@@ -26,7 +26,7 @@
 
   开发人员模式加载的扩展，Edge 启动时可能弹一次关闭提示，选择保留即可。换电脑或重建浏览器配置后要重新加载。
 
-## 改了什么
+## 修改内容
 
   1. `background.scripts` 改为 `background.service_worker`
      Chromium 的 MV3 不接受 `background.scripts`，照原样打包会直接安装失败。
